@@ -1,3 +1,10 @@
+# Unofficial LineageOS Installer GUI
+# by arm64 and Yeet1000
+#
+# View at https://github.com/thepyrite/Unofficial-LineageOS-installer
+# All Rights Reserved
+# 2023
+
 from tkinter import *
 from tkinter import messagebox
 import subprocess
