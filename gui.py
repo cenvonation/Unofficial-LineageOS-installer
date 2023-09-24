@@ -14,10 +14,10 @@ root=Tk()
 # defined
 
 def debugwin():
-    messagebox.showwarning("!! Alert !!", """You need to have USB Debugging ON for it to work.
+    messagebox.showwarning("!! Alert !!", """You need to have USB Debugging ON for these to work.
 Go enable it in Developer Options.
                            
-(If you dont have developer options, head over to Settings > About, scroll down and tap the Build Number 7 times. Now find the Developer options and enable USB Debugging.)
+(If you don't have developer options, head over to Settings > About, scroll down and tap the Build Number 7 times. Now find the Developer options and enable USB Debugging.)
 """)
     # debug window
     debugwin = Toplevel(root)
@@ -60,9 +60,13 @@ def extrawin():
 
     #elements
     extratext = Label(extrawin, text="extra options")
+    advancedmode = Checkbutton(extrawin, text='advanced mode', onvalue=1, offvalue=0)
+    verbose = Checkbutton(extrawin, text='verbose mode', onvalue=1, offvalue=0)
 
     #order
     extratext.pack()
+    advancedmode.pack()
+    verbose.pack()
 
 series = [
     "Google Pixel 7",
@@ -96,7 +100,7 @@ debug.pack()
 extras.pack()
 
 # root window
-root.title('installerTitle')
+root.title('unofficial lineage installer gui')
 root.geometry("200x250")
 root.resizable(height=False, width=False)
 
