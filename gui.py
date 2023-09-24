@@ -55,7 +55,7 @@ def extrawin():
 
     extrawin = Toplevel(root)
     extrawin.title("extra options")
-    extrawin.geometry("300x175")
+    extrawin.geometry("150x175")
     extrawin.resizable(height=False, width=False)
 
     #elements
