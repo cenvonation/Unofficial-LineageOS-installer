@@ -10,8 +10,6 @@
 <p align="center">
 Install LineageOS easier with an unofficial desktop GUI.
 <br /> 
-<a href="https://github.com/thepyrite/unofficiallineageinstaller"><strong>Explore the docs »</strong></a>
-<br /> 
 <br /> 
 <a href="https://github.com/thepyrite/unofficiallineageinstaller/releases/latest">Download</a>
 ·
