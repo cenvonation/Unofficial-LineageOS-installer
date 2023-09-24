@@ -7,6 +7,7 @@
 
 from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk
 import subprocess
 
 messagebox.showwarning("!! Alert !!", """This program won't work if android-tools aren't installed.
@@ -70,13 +71,15 @@ def extrawin():
     advancedmode.pack()
     verbose.pack()
 
-series = [
+serieslist = [
+    "Select device series",
     "Google Pixel 7",
     "Google Pixel 6",
     "Google Pixel 5"
 ]
 
-model = [
+models = [
+    "Select device model",
     "7 (panther)",
     "7 Pro (cheetah)",
     "7a (lynx)",
@@ -89,14 +92,23 @@ model = [
 
 # elements
 title = Label(root, text="unofficial lineageos installer gui")
-series = Button(root, text="choose phone series")
-model = Button(root, text="choose phone model")
+series = ttk.Combobox(state="readonly", values=serieslist)
+
+
+series.set("Select device series")
+
+
+
+model = ttk.Combobox(state="readonly", values=models)
+
+
+model.set("Select device model")
 debug = Button(root, text="debug", command=debugwin)
 extras = Button(root, text="extra options", command=extrawin)
 
 # order
 title.pack()
-series.pack()
+series.pack(pady=15)
 model.pack()
 debug.pack()
 extras.pack()
