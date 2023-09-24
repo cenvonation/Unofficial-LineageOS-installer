@@ -7,6 +7,7 @@
 
 from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk
 import subprocess
 
 messagebox.showwarning("!! Alert !!", """This program won't work if platform-tools isn't in PATH.
@@ -72,13 +73,13 @@ def extrawin():
     advancedmode.pack()
     verbose.pack()
 
-series = [
+serieslist = [
     "Google Pixel 7",
     "Google Pixel 6",
     "Google Pixel 5"
 ]
 
-model = [
+models = [
     "7 (panther)",
     "7 Pro (cheetah)",
     "7a (lynx)",
@@ -90,9 +91,20 @@ model = [
 ]
 
 # elements
+
+series = ttk.Combobox(state="readonly", values=serieslist)
+
+
+series.set("Select device series")
+
+
+
+model = ttk.Combobox(state="readonly", values=models)
+
+
+model.set("Select device model")
+
 title = Label(root, text="unofficial lineageos installer gui")
-series = Button(root, text="choose phone series")
-model = Button(root, text="choose phone model")
 debug = Button(root, text="debug", command=debugwin)
 extras = Button(root, text="extra options", command=extrawin)
 
