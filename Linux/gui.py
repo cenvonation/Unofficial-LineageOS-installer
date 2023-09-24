@@ -9,6 +9,10 @@ from tkinter import *
 from tkinter import messagebox
 import subprocess
 
+messagebox.showwarning("!! Alert !!", """This program won't work if android-tools aren't installed.
+
+Follow instructions on the GitHub page to learn how to properly set it up.""")
+
 root=Tk()
 
 # defined
@@ -22,7 +26,7 @@ Go enable it in Developer Options.
     # debug window
     debugwin = Toplevel(root)
     debugwin.title("debug android")
-    debugwin.geometry("300x175")
+    debugwin.geometry("150x175")
     debugwin.resizable(height=False, width=False)
 
     # defined
@@ -39,13 +43,11 @@ Go enable it in Developer Options.
         command = "adb reboot recovery"
         subprocess.Popen(command, shell=True)
     # elements
-    pathtext = Label(debugwin, text="Add platform-tools to PATH before or it won't work.")
     reboot = Button(debugwin, text="regular reboot", command=rebootaction)
     bootloader = Button(debugwin, text="reboot bootloader", command=bootloaderaction)
     recovery = Button(debugwin, text="reboot recovery", command=recoveryaction)
 
     # order
-    pathtext.pack()
     reboot.pack()
     bootloader.pack()
     recovery.pack()
