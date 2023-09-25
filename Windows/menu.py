@@ -12,7 +12,9 @@ import subprocess
 
 messagebox.showwarning("!! Alert !!", """This program won't work if platform-tools isn't in PATH.
 
-Please visit https://developer.android.com/tools/releases/platform-tools and download the platform-tools. Follow instructions on the GitHub page to learn how to properly set it up.""")
+Please visit https://developer.android.com/tools/releases/platform-tools and download the platform-tools. Follow instructions on the GitHub page to learn how to properly set it up.
+
+If it's already set up, you can proceed to the installer.""")
 
 root=Tk()
 
@@ -26,7 +28,7 @@ Go enable it in Developer Options.
 """)
     # debug window
     debugwin = Toplevel(root)
-    debugwin.title("debug android")
+    debugwin.title("Android Debug")
     debugwin.geometry("300x175")
     debugwin.resizable(height=False, width=False)
 
@@ -45,9 +47,9 @@ Go enable it in Developer Options.
         subprocess.Popen(command, shell=True)
     # elements
     pathtext = Label(debugwin, text="Add platform-tools to PATH before or it won't work.")
-    reboot = Button(debugwin, text="regular reboot", command=rebootaction)
-    bootloader = Button(debugwin, text="reboot bootloader", command=bootloaderaction)
-    recovery = Button(debugwin, text="reboot recovery", command=recoveryaction)
+    reboot = Button(debugwin, text="Regular reboot", command=rebootaction)
+    bootloader = Button(debugwin, text="Reboot bootloader", command=bootloaderaction)
+    recovery = Button(debugwin, text="Reboot recovery", command=recoveryaction)
 
     # order
     pathtext.pack()
@@ -59,14 +61,14 @@ def extrawin():
     messagebox.showwarning("!! Alert !!", "These are extras you can select AFTER finishing the LineageOS installation on your device.")
 
     extrawin = Toplevel(root)
-    extrawin.title("extra options")
+    extrawin.title("Extra")
     extrawin.geometry("150x175")
     extrawin.resizable(height=False, width=False)
 
     #elements
-    extratext = Label(extrawin, text="extra options")
-    advancedmode = Checkbutton(extrawin, text='advanced mode', onvalue=1, offvalue=0)
-    verbose = Checkbutton(extrawin, text='verbose mode', onvalue=1, offvalue=0)
+    extratext = Label(extrawin, text="Extra options")
+    advancedmode = Checkbutton(extrawin, text='Advanced mode', onvalue=1, offvalue=0)
+    verbose = Checkbutton(extrawin, text='Verbose mode', onvalue=1, offvalue=0)
 
     #order
     extratext.pack()
@@ -91,32 +93,31 @@ models = [
 ]
 
 # elements
-
 series = ttk.Combobox(state="readonly", values=serieslist)
-
-
 series.set("Select device series")
 
-
-
 model = ttk.Combobox(state="readonly", values=models)
-
-
 model.set("Select device model")
 
-title = Label(root, text="unofficial lineageos installer gui")
-debug = Button(root, text="debug", command=debugwin)
-extras = Button(root, text="extra options", command=extrawin)
+status = Label(root, text="Device status: unavailable")
+
+proceed = Button(root, text="Proceed to installation")
+
+title = Label(root, text="Installer")
+debug = Button(root, text="Debug", command=debugwin)
+extras = Button(root, text="Extra options", command=extrawin)
 
 # order
 title.pack()
 series.pack()
 model.pack()
+status.pack()
+proceed.pack()
 debug.pack()
 extras.pack()
 
 # root window
-root.title('unofficial lineage installer gui')
+root.title('Installer')
 root.geometry("200x250")
 root.resizable(height=False, width=False)
 
