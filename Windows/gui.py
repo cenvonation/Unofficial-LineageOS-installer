@@ -119,5 +119,7 @@ extras.pack()
 root.title('unofficial lineage installer gui')
 root.geometry("200x250")
 root.resizable(height=False, width=False)
-
+icon_data = base64.b64decode(iconb64)
+actualicon = PhotoImage(data=icon_data)
+root.iconphoto(True, actualicon)
 root.mainloop()
