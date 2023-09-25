@@ -64,12 +64,12 @@ def extrawin():
     #elements
     extratext = Label(extrawin, text="extra options")
     advancedmode = Checkbutton(extrawin, text='advanced mode', onvalue=1, offvalue=0)
-    verbose = Checkbutton(extrawin, text='verbose mode', onvalue=1, offvalue=0)
+    installgapps = Checkbutton(extrawin, text='install gapps', onvalue=1, offvalue=0)
 
     #order
     extratext.pack()
     advancedmode.pack()
-    verbose.pack()
+    installgapps.pack()
 
 serieslist = [
     "Select device series",
