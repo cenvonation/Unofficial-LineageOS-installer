@@ -95,7 +95,7 @@ def extrawin():
 
     extrawin = Toplevel(root)
     extrawin.title("Extra")
-    extrawin.geometry("150x175")
+    extrawin.geometry("200x175")
     extrawin.resizable(height=False, width=False)
 
     #elements
@@ -107,6 +107,34 @@ def extrawin():
     extratext.pack()
     advancedmode.pack()
     verbose.pack()
+
+def rootwin():
+    root.withdraw()
+    messagebox.showwarning("!! Alert !!", "You should ONLY use this when you have finished installing LineageOS and have finished setting it up.")
+
+    rootwin = Toplevel(root)
+    rootwin.title("Root")
+    rootwin.geometry("200x175")
+    rootwin.resizable(height=False, width=False)
+
+    #elements
+    install = Button(rootwin, text="Prodeed to installation")
+    rootyes = Checkbutton(rootwin, text='Install Magisk', onvalue=1, offvalue=0)
+    rootno = Checkbutton(rootwin, text='Uninstall Magisk', onvalue=1, offvalue=0)
+
+    def exit_application_inroot():
+        msg_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
+        if msg_box == 'yes':
+            root.destroy()
+        else:
+            pass
+
+    rootwin.protocol("WM_DELETE_WINDOW", exit_application_inroot)
+
+    #order
+    install.pack(pady=30)
+    rootyes.pack()
+    rootno.pack()
 
 serieslist = [
     "Google Pixel 7",
@@ -145,7 +173,7 @@ model.pack()
 status.pack()
 proceed.pack()
 
-
+# menubar
 menubar = Menu(root)
 Debug = Menu(menubar, tearoff=0)
 Debug.add_command(label="Reboot device", command=rebootaction)
@@ -156,16 +184,14 @@ extras = Menu(menubar, tearoff=0)
 extras.add_checkbutton(label="Install GAPPS", onvalue=1, offvalue=0, variable=gappsvar)
 extras.add_checkbutton(label="Advanced mode", onvalue=1, offvalue=0, variable=advancedvar)
 menubar.add_cascade(label="Extras", menu=extras)
-
-
-
-
-
+rootmenu = Menu(menubar, tearoff=0)
+rootmenu.add_checkbutton(label="Root installer", command=rootwin)
+menubar.add_cascade(label="Root", menu=rootmenu)
 
 
 # root window
 root.title('Installer')
-root.geometry("200x250")
+root.geometry("250x200")
 root.resizable(height=False, width=False)
 icon_data = base64.b64decode(iconb64)
 actualicon = PhotoImage(data=icon_data)
