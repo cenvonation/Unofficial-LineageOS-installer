@@ -19,64 +19,63 @@ iconb64 = """iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACAvzbMAAAAAXNSR0IB2cksfwAAAAl
 
 
 
-messagebox.showwarning("!! Alert !!", """This program won't work if the ADB platform tools (android-tools, android-sdk-platform-tools, etc) aren't installed.
 
-Follow instructions on the GitHub page to learn how to properly set it up.""")
 
 root=Tk()
 
 # defined
 
-def debugwin():
-    messagebox.showwarning("!! Alert !!", """You need to have USB Debugging ON for these to work.
-Go enable it in Developer Options.
-                           
-(If you don't have developer options, head over to Settings > About, scroll down and tap the Build Number 7 times. Now find the Developer options and enable USB Debugging.)
-""")
-    # debug window
-    debugwin = Toplevel(root)
-    debugwin.title("debug android")
-    debugwin.geometry("150x175")
-    debugwin.resizable(height=False, width=False)
 
-    # defined
 
-    def rebootaction():
+
+
+
+def rebootaction():
         command = "adb reboot"
         subprocess.Popen(command, shell=True)
 
-    def bootloaderaction():
+def bootloaderaction():
         command = "adb reboot bootloader"
         subprocess.Popen(command, shell=True)
 
-    def recoveryaction():
+def recoveryaction():
         command = "adb reboot recovery"
         subprocess.Popen(command, shell=True)
-    # elements
-    reboot = Button(debugwin, text="regular reboot", command=rebootaction)
-    bootloader = Button(debugwin, text="reboot bootloader", command=bootloaderaction)
-    recovery = Button(debugwin, text="reboot recovery", command=recoveryaction)
 
-    # order
-    reboot.pack()
-    bootloader.pack()
-    recovery.pack()
 
-def extrawin():
-    messagebox.showwarning("!! Alert !!", "These are extras you can select AFTER finishing the LineageOS installation on your device.")
 
-    extrawin = Toplevel(root)
-    extrawin.title("extra options")
-    extrawin.geometry("150x175")
-    extrawin.resizable(height=False, width=False)
-    #elements
-    extratext = Label(extrawin, text="extra options")
-    advancedmode = Checkbutton(extrawin, text='advanced mode', onvalue=1, offvalue=0)
-    installgapps = Checkbutton(extrawin, text='install gapps', onvalue=1, offvalue=0)
-    #order
-    extratext.pack()
-    advancedmode.pack()
-    installgapps.pack()
+
+
+advancedvar = BooleanVar()
+gappsvar = BooleanVar()
+gappsvar.set(True)
+
+
+
+def installwin():
+    root.withdraw() # "Closes" the root window
+    installwin = Toplevel(root)
+    installwin.title("Installing...")
+    installwin.geometry("300x170")
+    installwin.resizable(height=False, width=False)
+    ## installwin.protocol("WM_DELETE_WINDOW", disable_event) (Could be seen as malicious, let's ask if the user wants to close the window instead)
+    pb = ttk.Progressbar(installwin, orient='horizontal', mode='indeterminate', length=280) #It's odd but it needs to be global
+
+    pb.start()
+    installing = Label(installwin, text="Installing. Please wait...")
+    installing.pack()
+    pb.pack(padx=20, pady=20)
+    def exit_application():
+        pb.stop()
+        msg_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
+        if msg_box == 'yes':
+            root.destroy()
+        else:
+            pb.start()
+            pass
+
+    installwin.protocol("WM_DELETE_WINDOW", exit_application)
+
 
 serieslist = [
     "Select device series",
@@ -110,15 +109,31 @@ model = ttk.Combobox(state="readonly", values=models)
 
 
 model.set("Select device model")
-debug = Button(root, text="debug", command=debugwin)
-extras = Button(root, text="extra options", command=extrawin)
-
+proceed = Button(root, text="Proceed to installation", command=installwin)
 # order
 title.pack()
 series.pack(pady=15)
 model.pack()
-debug.pack()
-extras.pack()
+proceed.pack()
+
+
+menubar = Menu(root)
+Debug = Menu(menubar, tearoff=0)
+Debug.add_command(label="Reboot device", command=rebootaction)
+Debug.add_command(label="Reboot recovery", command=recoveryaction)
+Debug.add_command(label="Reboot bootloader", command=bootloaderaction)
+menubar.add_cascade(label="Debug", menu=Debug)
+extras = Menu(menubar, tearoff=0)
+extras.add_checkbutton(label="Install GAPPS", onvalue=1, offvalue=0, variable=gappsvar)
+extras.add_checkbutton(label="Advanced mode", onvalue=1, offvalue=0, variable=advancedvar)
+menubar.add_cascade(label="Extras", menu=extras)
+
+
+
+
+
+
+
 
 # root window
 root.title('unofficial lineage installer gui')
@@ -131,5 +146,7 @@ actualicon = PhotoImage(data=icon_data)
 
 
 
+
+root.config(menu=menubar)
 root.iconphoto(True, actualicon)
 root.mainloop()
