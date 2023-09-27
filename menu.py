@@ -122,6 +122,12 @@ def rootwin():
     rootyes = Checkbutton(rootwin, text='Install Magisk', onvalue=1, offvalue=0)
     rootno = Checkbutton(rootwin, text='Uninstall Magisk', onvalue=1, offvalue=0)
 
+    #order
+    install.pack(pady=30)
+    rootyes.pack()
+    rootno.pack()
+
+    #exit
     def exit_application_inroot():
         msg_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
         if msg_box == 'yes':
@@ -130,11 +136,6 @@ def rootwin():
             pass
 
     rootwin.protocol("WM_DELETE_WINDOW", exit_application_inroot)
-
-    #order
-    install.pack(pady=30)
-    rootyes.pack()
-    rootno.pack()
 
 serieslist = [
     "Google Pixel 7",
