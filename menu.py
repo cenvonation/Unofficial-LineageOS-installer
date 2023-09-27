@@ -126,7 +126,7 @@ def rootwin():
     install.pack(pady=30)
     rootyes.pack()
     rootno.pack()
-
+    
     #exit
     def exit_application_inroot():
         msg_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
