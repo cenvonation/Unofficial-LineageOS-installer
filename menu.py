@@ -117,16 +117,43 @@ def rootwin():
     rootwin.geometry("200x175")
     rootwin.resizable(height=False, width=False)
 
+
+    # tried to get this to work. maybe i will fix it later?
+    # im too tired for today. if u can fix it it will be appreciated :)
+    def proceedroot():
+        if noinstall() == 1:
+            print("selected uninstall")
+            rollback = Toplevel(rootwin)
+            rollback.title("Uninstall Root")
+            rollback.geometry("200x175")
+            rollback.resizable(height=False, width=False)
+        else:
+            print("unselected uninstall")
+            pass
+        
+        if yesinstall() == 1:
+            print("selected install")
+            go = Toplevel(rootwin)
+            go.title("Install Root")
+            go.geometry("200x175")
+            go.resizable(height=False, width=False)
+        else:
+            print("unselected install")
+            pass
+
+    yesinstall = IntVar()
+    noinstall = IntVar()
+
     #elements
-    install = Button(rootwin, text="Prodeed to installation")
-    rootyes = Checkbutton(rootwin, text='Install Magisk', onvalue=1, offvalue=0)
-    rootno = Checkbutton(rootwin, text='Uninstall Magisk', onvalue=1, offvalue=0)
+    install = Button(rootwin, text="Prodeed to installation", command=proceedroot)
+    rootyes = Checkbutton(rootwin, text='Install Magisk', variable=yesinstall, onvalue=1, offvalue=0)
+    rootno = Checkbutton(rootwin, text='Uninstall Magisk', variable=noinstall, onvalue=1, offvalue=0)
 
     #order
     install.pack(pady=30)
     rootyes.pack()
     rootno.pack()
-    
+
     #exit
     def exit_application_inroot():
         msg_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
@@ -165,10 +192,10 @@ status = Label(root, text="Device status: unavailable")
 
 proceed = Button(root, text="Proceed to installation", command=installwin)
 
-title = Label(root, text="Installer")
+title = Label(root, text="Installer", font=('Segoe UI', 25))
 
 # order
-title.pack()
+title.pack(pady=5)
 series.pack(pady=15)
 model.pack()
 status.pack()
