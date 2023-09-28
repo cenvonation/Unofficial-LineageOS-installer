@@ -118,40 +118,51 @@ def rootwin():
     rootwin.resizable(height=False, width=False)
 
 
-    # tried to get this to work. maybe i will fix it later?
-    # im too tired for today. if u can fix it it will be appreciated :)
-    def proceedroot():
-        if noinstall() == 1:
-            print("selected uninstall")
-            rollback = Toplevel(rootwin)
-            rollback.title("Uninstall Root")
-            rollback.geometry("200x175")
-            rollback.resizable(height=False, width=False)
-        else:
-            print("unselected uninstall")
-            pass
-        
-        if yesinstall() == 1:
-            print("selected install")
-            go = Toplevel(rootwin)
-            go.title("Install Root")
-            go.geometry("200x175")
-            go.resizable(height=False, width=False)
-        else:
-            print("unselected install")
-            pass
 
-    yesinstall = IntVar()
-    noinstall = IntVar()
+    def yesroot():
+        rootwin.withdraw()
+        print("selected install")
+        go = Toplevel(rootwin)
+        go.title("Install Root")
+        go.geometry("225x200")
+        go.resizable(height=False, width=False)
+
+        def exit_rooting():
+            exit = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
+            if exit == 'yes':
+                root.destroy()
+            else:
+                pass
+
+        go.protocol("WM_DELETE_WINDOW", exit_rooting)
+    
+    def noroot():
+        rootwin.withdraw()
+        print("selected uninstall")
+        revert = Toplevel(rootwin)
+        revert.title("uninstall Root")
+        revert.geometry("200x175")
+        revert.resizable(height=False, width=False)
+
+        def exit_unrooting():
+            exit = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
+            if exit == 'yes':
+                root.destroy()
+            else:
+                pass
+
+        revert.protocol("WM_DELETE_WINDOW", exit_unrooting)
 
     #elements
-    install = Button(rootwin, text="Prodeed to installation", command=proceedroot)
-    rootyes = Checkbutton(rootwin, text='Install Magisk', variable=yesinstall, onvalue=1, offvalue=0)
-    rootno = Checkbutton(rootwin, text='Uninstall Magisk', variable=noinstall, onvalue=1, offvalue=0)
+    roottitle = Label(rootwin, text="Root Installer", font=('Segoe UI', 17))
+    rootsub = Label(rootwin, text="An automatic Magisk.apk installer.", font=('Segoe UI', 8))
+    rootyes = Button(rootwin, text='Install Magisk', command=yesroot)
+    rootno = Button(rootwin, text='Uninstall Magisk', command=noroot)
 
     #order
-    install.pack(pady=30)
-    rootyes.pack()
+    roottitle.pack(pady=15)
+    rootsub.pack()
+    rootyes.pack(pady=10)
     rootno.pack()
 
     #exit
