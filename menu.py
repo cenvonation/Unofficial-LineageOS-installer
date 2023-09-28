@@ -25,6 +25,13 @@ elif platform.system() == "Linux":
 Follow instructions on the GitHub page to learn how to properly set it up.
 If it's already set up, you can proceed to the installer.""")
 
+# darwin etas0n
+#elif platform.system() == "Darwin":
+    #messagebox.showwarning("!! Alert !!", """This program won't work if the ADB platform tools (android-tools, android-sdk-platform-tools, etc) aren't installed.
+
+#Follow instructions on the GitHub page to learn how to properly set it up.
+#If it's already set up, you can proceed to the installer.""")
+
 else: # Assume incompatible OS
     messagebox.showerror("Incompatible!", "Sorry, this program isn't compatible with your OS.")
     exit()
@@ -114,7 +121,7 @@ def rootwin():
 
     rootwin = Toplevel(root)
     rootwin.title("Root")
-    rootwin.geometry("200x175")
+    rootwin.geometry("225x200")
     rootwin.resizable(height=False, width=False)
 
 
@@ -141,7 +148,7 @@ def rootwin():
         print("selected uninstall")
         revert = Toplevel(rootwin)
         revert.title("uninstall Root")
-        revert.geometry("200x175")
+        revert.geometry("225x200")
         revert.resizable(height=False, width=False)
 
         def exit_unrooting():
