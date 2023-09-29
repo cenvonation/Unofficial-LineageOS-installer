@@ -38,6 +38,9 @@ else: # Assume incompatible OS
 
 root=Tk()
 
+# better looking button soon (TM)
+# buttonui = PhotoImage(file="images/ui/button-ui.png")
+
 # defined
 gappsvar = BooleanVar()
 gappsvar.set(True)
@@ -131,7 +134,7 @@ def rootwin():
         print("selected install")
         go = Toplevel(rootwin)
         go.title("Install Root")
-        go.geometry("225x200")
+        go.geometry("325x210")
         go.resizable(height=False, width=False)
 
         def exit_rooting():
@@ -140,6 +143,18 @@ def rootwin():
                 root.destroy()
             else:
                 pass
+        
+        #elements
+        title = Label(go, text="Welcome to the Root Installer!", font=('Segoe UI', 15))
+        p1 = Label(go, text="This will start the setup by installing Magisk on your Pixel device.", font=('Segoe UI', 7))
+        p2 = Label(go, text="Please click Continue to start the setup.", font=('Segoe UI', 8))
+        start = Button(go, text="Continue", bd=3, relief=SOLID, highlightbackground="white", font=('Segoe UI', 11))
+
+        #order
+        title.pack(pady=20)
+        p1.pack(pady=15)
+        p2.pack()
+        start.pack(pady=22)
 
         go.protocol("WM_DELETE_WINDOW", exit_rooting)
     
@@ -147,7 +162,7 @@ def rootwin():
         rootwin.withdraw()
         print("selected uninstall")
         revert = Toplevel(rootwin)
-        revert.title("uninstall Root")
+        revert.title("Uninstall Root")
         revert.geometry("225x200")
         revert.resizable(height=False, width=False)
 
@@ -163,8 +178,8 @@ def rootwin():
     #elements
     roottitle = Label(rootwin, text="Root Installer", font=('Segoe UI', 17))
     rootsub = Label(rootwin, text="An automatic Magisk.apk installer.", font=('Segoe UI', 8))
-    rootyes = Button(rootwin, text='Install Magisk', command=yesroot)
-    rootno = Button(rootwin, text='Uninstall Magisk', command=noroot)
+    rootyes = Button(rootwin, text='Install Magisk', bd=3, relief=SOLID, highlightbackground="white", command=yesroot)
+    rootno = Button(rootwin, text='Uninstall Magisk', bd=3, relief=SOLID, highlightbackground="white", command=noroot)
 
     #order
     roottitle.pack(pady=15)
@@ -208,7 +223,7 @@ model.set("Select device model")
 
 status = Label(root, text="Device status: unavailable")
 
-proceed = Button(root, text="Proceed to installation", command=installwin)
+proceed = Button(root, text="Proceed to installation", bd=3, relief=SOLID, highlightbackground="white", command=installwin)
 
 title = Label(root, text="Installer", font=('Segoe UI', 25))
 
