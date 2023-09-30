@@ -238,9 +238,9 @@ def rootwin():
     rootwin.protocol("WM_DELETE_WINDOW", exit_application_inroot)
 
 serieslist = [
-    "Google Pixel 7",
-    "Google Pixel 6",
-    "Google Pixel 5"
+    "7 Series",
+    "6 Series",
+    "5 Series"
 ]
 
 models = [
@@ -250,6 +250,23 @@ models = [
     "6 (oriole)",
     "6 Pro (raven)",
     "6a (bluejay)",
+    "5 (redfin)",
+    "5a (barbet)"
+]
+
+models7 = [
+    "7 (panther)",
+    "7 Pro (cheetah)",
+    "7a (lynx)"
+]
+
+models6 = [
+    "6 (oriole)",
+    "6 Pro (raven)",
+    "6a (bluejay)"
+]
+
+models5 = [
     "5 (redfin)",
     "5a (barbet)"
 ]
