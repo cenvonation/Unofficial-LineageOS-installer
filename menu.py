@@ -173,12 +173,18 @@ def rootwin():
             recovery = "adb reboot recovery"
             subprocess.Popen(recovery, shell=True)
             rpb.value = 30
-
+            download = "curl -s https://api.github.com/repos/topjohnwu/magisk/releases/latest |   jq --raw-output '.assets[0] | .browser_download_url' | aria2c -i -"
+            if os.path.isfile("Magisk*.apk") == False:
+                print("Magisk is not downloaded yet!")
+                subprocess.Popen(download, shell=True)
+            else:
+                print("Magisk already exists, proceeding!")
+            rpb.value = 25
             rpb.stop()
             messagebox.showwarning("Alert", "Select Apply Update > Apply from ADB then close this popup to continue.")
 
             rpb.start()
-            flash = "adb sideload magisk.apk"
+            flash = "adb sideload Magisk*.apk"
             subprocess.Popen(flash, shell=True)
             rpb.value = 100
 
