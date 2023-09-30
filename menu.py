@@ -147,43 +147,60 @@ def rootwin():
         
         def installmag():
             #installer time yippe
+            rootwin.withdraw()
 
             process = Toplevel(go)
             process.title("Rooting...")
-            process.geometry('325x210')
+            process.geometry('325x100')
             process.resizable(height=False, width=False)
 
             title = Label(go, text="Rooting the device...", font=('Segoe UI', 15))
             p2 = Label(go, text="This process is (almost) automated.", font=('Segoe UI', 8))
             p3 = Label(go, text="Please be ready for any popups on the device.", font=('Segoe UI', 8))
 
+            rpb = ttk.Progressbar(process, orient='horizontal', mode='determinate', length=280)
+            rpb.start()
+
             title.pack(pady=20)
             p2.pack(pady=15)
             p3.pack()
+            rpb.pack(pady=5)
 
             os.chdir("/platform-tools")
+            rpb['value'] = 5
 
             recovery = "adb reboot recovery"
             subprocess.Popen(recovery, shell=True)
+            rpb['value'] = 30
 
+            rpb.stop()
             messagebox.showwarning("Alert", "Select Apply Update > Apply from ADB then close this popup to continue.")
 
+            rpb.start()
             flash = "adb sideload magisk.apk"
             subprocess.Popen(flash, shell=True)
+            rpb['value'] = 100
+
+            def goback():
+                finishroot.withdraw()
+                rootwin.withdraw()
+                root.deiconify()
 
             process.withdraw()
             finishroot = Toplevel(process)
             finishroot.title("Finished!")
-            process.geometry("325x210")
-            process.resizable(width=False, height=False)
+            finishroot.geometry("325x210")
+            finishroot.resizable(width=False, height=False)
 
-            hooray = Label(go, text="Hooray! 🎉", font=('Segoe UI', 15))
-            sub1 = Label(go, text="Magisk is installed!", font=('Segoe UI', 8))
-            sub2 = Label(go, text="You can now reboot your device.", font=('Segoe UI', 8))
+            hooray = Label(finishroot, text="Installation complete", font=('Segoe UI', 15))
+            sub2 = Label(finishroot, text="You can now reboot your device.", font=('Segoe UI', 8))
+            back = Button(finishroot, text="Continue", bd=3, relief=SOLID, highlightbackground="white", font=('Segoe UI', 11), command=goback)
 
             hooray.pack(pady=20)
-            sub1.pack(pady=15)
-            sub2.pack()
+            sub2.pack(pady=20)
+            back.pack(pady=5)
+
+            go.protocol("WM_DELETE_WINDOW", exit_rooting)
 
         #elements
         title = Label(go, text="Welcome to the Root Installer!", font=('Segoe UI', 15))
@@ -198,35 +215,17 @@ def rootwin():
         start.pack(pady=22)
 
         go.protocol("WM_DELETE_WINDOW", exit_rooting)
-    
-    def noroot():
-        rootwin.withdraw()
-        print("selected uninstall")
-        revert = Toplevel(rootwin)
-        revert.title("Uninstall Root")
-        revert.geometry("225x200")
-        revert.resizable(height=False, width=False)
-
-        def exit_unrooting():
-            exit = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
-            if exit == 'yes':
-                root.destroy()
-            else:
-                pass
-
-        revert.protocol("WM_DELETE_WINDOW", exit_unrooting)
 
     #elements
     roottitle = Label(rootwin, text="Root Installer", font=('Segoe UI', 17))
     rootsub = Label(rootwin, text="An automatic Magisk.apk installer.", font=('Segoe UI', 8))
     rootyes = Button(rootwin, text='Install Magisk', bd=3, relief=SOLID, highlightbackground="white", command=yesroot)
-    rootno = Button(rootwin, text='Uninstall Magisk', bd=3, relief=SOLID, highlightbackground="white", command=noroot)
+    # removed uninstall option because the same option is available in the magisk app. pointless.
 
     #order
     roottitle.pack(pady=15)
     rootsub.pack()
     rootyes.pack(pady=10)
-    rootno.pack()
 
     #exit
     def exit_application_inroot():
