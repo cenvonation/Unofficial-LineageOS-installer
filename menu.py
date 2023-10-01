@@ -261,6 +261,7 @@ models = [
     "5a (barbet)"
 ]
 
+# selecting a series will show the models for that series but lets focus on other stuff for now
 models7 = [
     "7 (panther)",
     "7 Pro (cheetah)",
