@@ -71,12 +71,7 @@ def installwin():
     installwin.geometry("300x170")
     installwin.resizable(height=False, width=False)
     ## installwin.protocol("WM_DELETE_WINDOW", disable_event) (Could be seen as malicious, let's ask if the user wants to close the window instead)
-    pb = ttk.Progressbar(installwin, orient='horizontal', mode='indeterminate', length=280) #It's odd but it needs to be global
 
-    pb.start()
-    installing = Label(installwin, text="Installing. Please wait...")
-    installing.pack()
-    pb.pack(padx=20, pady=20)
     def exit_application():
         pb.stop()
         msg_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?', icon='warning')
@@ -86,20 +81,36 @@ def installwin():
             pb.start()
             pass
 
-    installwin.protocol("WM_DELETE_WINDOW", exit_application)
+    pb = ttk.Progressbar(installwin, orient='horizontal', mode='indeterminate', length=280) #It's odd but it needs to be global
 
+    pb.start()
+    installing = Label(installwin, text="Installing. Please wait...")
+    installing.pack()
+    pb.pack(padx=20, pady=20)
 
-    def rebootaction():
-        command = "adb reboot"
-        subprocess.Popen(command, shell=True)
+    warn1 = messagebox.askquestion('Install Alert', "By unlocking the bootloader, your device will have its data WIPED. If you didn't back up your data on the device, you cannot retrieve it. Are you sure you want to continue?", icon='warning')
+    if warn1 == 'yes':
+        os.chdir("./platform-tools")
 
-    def bootloaderaction():
+        #bootloader
         command = "adb reboot bootloader"
         subprocess.Popen(command, shell=True)
+        #wait until its in bootloader/fastboot to continue
 
-    def recoveryaction():
-        command = "adb reboot recovery"
+        #check if device is connected
+        command = "fastboot devices"
         subprocess.Popen(command, shell=True)
+        # if detected then continue. else, show popup.
+
+        #unlock bootloader
+        command = "fastboot flashing unlock"
+        subprocess.Popen(command, shell=True)
+        #wait for user to press volume key and power to unlock
+        
+    else:
+        root.destroy()
+
+    installwin.protocol("WM_DELETE_WINDOW", exit_application)
 
 def extrawin():
     messagebox.showwarning("!! Alert !!", "These are extras you can select AFTER finishing the LineageOS installation on your device.")
