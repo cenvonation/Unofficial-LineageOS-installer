@@ -91,19 +91,29 @@ def installwin():
 
     warn1 = messagebox.askquestion('Install Alert', "By unlocking the bootloader, your device will have its data WIPED. If you didn't back up your data on the device, you cannot retrieve it. Are you sure you want to continue?", icon='warning')
     if warn1 == 'yes':
-        os.chdir("./platform-tools")
+        if platform.system == "Windows":
+            os.chdir("./platform-tools")
 
         #bootloader
         command = "adb reboot bootloader"
         subprocess.Popen(command, shell=True)
         #wait until its in bootloader/fastboot to continue
+        def is_fastboot_mode():
+            try:
+                output = subprocess.check_output(['fastboot', 'devices'], universal_newlines=True)
+                return 'fastboot' in output.lower()
+            except subprocess.CalledProcessError:
+                return False
 
-        #check if device is connected
-        command = "fastboot devices"
-        subprocess.Popen(command, shell=True)
-        # if detected then continue. else, show popup.
+            # Check if the device is in Fastboot mode
+        if is_fastboot_mode():
+            pass
+        else:
+            #do something
+            pass
 
-        #unlock bootloader
+
+    #   unlock bootloader
         command = "fastboot flashing unlock"
         subprocess.Popen(command, shell=True)
         #wait for user to press volume key and power to unlock
