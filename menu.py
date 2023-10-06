@@ -109,14 +109,11 @@ def installwin():
         if is_fastboot_mode():
             pass
         else:
-            #do something
+            #unlock bootloader
+            command = "fastboot flashing unlock"
+            subprocess.Popen(command, shell=True)
+            #wait for user to press volume key and power to unlock
             pass
-
-
-    #   unlock bootloader
-        command = "fastboot flashing unlock"
-        subprocess.Popen(command, shell=True)
-        #wait for user to press volume key and power to unlock
         
     else:
         root.destroy()
