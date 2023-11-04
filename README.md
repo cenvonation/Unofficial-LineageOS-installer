@@ -24,5 +24,4 @@ Install LineageOS easier with an unofficial desktop GUI.
 <!--ABOUT THE PROJECT --> 
 ## About The Project <br> 
 <!-- [![Product Name Screen Shot][product - screenshot]](https://example.com) ---> <br>
-nothing yet fr  
-Compiled binaries not yet available but it's Python, come on
+ABANDONED! PLEASE DO NOT USE THIS PROJECT!
